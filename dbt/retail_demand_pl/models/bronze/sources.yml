@@ -1,0 +1,109 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Raw data from GCS"
+    database: retail-demand-pipeline
+    schema: retail_demand_pl_dataset
+    tables:
+      - name: m5_calendar_ext
+        description: "M5 calendar with events and promotions"
+        external:
+          location: "gs://retail-demand-pl-bronze/m5/bronze/calendar.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: date
+            data_type: STRING
+          - name: wm_yr_wk
+            data_type: INT64
+          - name: weekday
+            data_type: STRING
+          - name: wday
+            data_type: INT64
+          - name: month
+            data_type: INT64
+          - name: year
+            data_type: INT64
+          - name: event_name_1
+            data_type: STRING
+          - name: event_type_1
+            data_type: STRING
+          - name: event_name_2
+            data_type: STRING
+          - name: event_type_2
+            data_type: STRING
+          - name: snap_CA
+            data_type: INT64
+          - name: snap_TX
+            data_type: INT64
+          - name: snap_WI
+            data_type: INT64
+
+      - name: m5_sell_prices_ext
+        description: "M5 sell prices per store and item"
+        external:
+          location: "gs://retail-demand-pl-bronze/m5/bronze/sell_prices.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: store_id
+            data_type: STRING
+          - name: item_id
+            data_type: STRING
+          - name: wm_yr_wk
+            data_type: INT64
+          - name: sell_price
+            data_type: FLOAT64
+
+      - name: m5_sales_ext
+        description: "M5 sales training data"
+        external:
+          location: "gs://retail-demand-pl-bronze/m5/bronze/sales_train_validation.csv"
+          options:
+            format: csv
+            skip_leading_rows: 1
+
+      - name: weather_california_ext
+        description: "Daily weather data for California (2011-2016)"
+        external:
+          location: "gs://retail-demand-pl-bronze/weather/bronze/Weather_daily/*.jsonl"
+          options:
+            format: json
+        columns:
+          - name: time
+            data_type: JSON
+          - name: temperature_2m_max
+            data_type: JSON
+          - name: precipitation_sum
+            data_type: JSON
+
+      - name: weather_texas_ext
+        description: "Daily weather data for Texas (2011-2016)"
+        external:
+          location: "gs://retail-demand-pl-bronze/weather/bronze/weather_daily_texas/*.jsonl"
+          options:
+            format: json
+        columns:
+          - name: time
+            data_type: JSON
+          - name: temperature_2m_max
+            data_type: JSON
+          - name: precipitation_sum
+            data_type: JSON
+
+      - name: weather_wisconsin_ext
+        description: "Daily weather data for Wisconsin (2011-2016)"
+        external:
+          location: "gs://retail-demand-pl-bronze/weather/bronze/weather_daily_wisconsin/*.jsonl"
+          options:
+            format: json
+        columns:
+          - name: time
+            data_type: JSON
+          - name: temperature_2m_max
+            data_type: JSON
+          - name: precipitation_sum
+            data_type: JSON

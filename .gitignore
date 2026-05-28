@@ -12,8 +12,7 @@ build/
 *.ipynb
 
 # Credentials & secrets
-*.json
-!ingestion/airbyte/credentials.example.json
+retail-demand-pipeline-*.json
 hmac_keys.txt
 *.key
 *.pem
@@ -35,6 +34,15 @@ ingestion/scripts/data/
 
 # Notes personnelles / docs de travail
 steps/
+
+# dbt
+dbt/logs/
+dbt/**/target/
+dbt/**/dbt_packages/
+dbt/**/logs/
+
+# Claude Code (settings locaux)
+.claude/
 
 # macOS
 .DS_Store
