@@ -1,15 +1,27 @@
-SELECT
-    CAST(`date` AS DATE) AS calendar_date,
-    CAST(wm_yr_wk AS INT64) AS wm_yr_wk,
-    CAST(weekday AS STRING) AS weekday,
-    CAST(wday AS INT64) AS wday,
-    CAST(month AS INT64) AS month,
-    CAST(year AS INT64) AS year,
-    CAST(event_name_1 AS STRING) AS event_name_1,
-    CAST(event_type_1 AS STRING) AS event_type_1,
-    CAST(event_name_2 AS STRING) AS event_name_2,
-    CAST(event_type_2 AS STRING) AS event_type_2,
-    CAST(snap_CA AS INT64)  AS snap_ca,
-    CAST(snap_TX AS INT64)  AS snap_tx,
-    CAST(snap_WI AS INT64)  AS snap_wi
-FROM {{ source('bronze', 'm5_calendar_ext') }}
+
+with
+
+source as (
+    select * from {{ source('bronze', 'm5_calendar_ext') }}
+),
+
+renamed as (
+    select
+        cast(`date` as date) as calendar_date,
+        cast(wm_yr_wk as int64) as wm_yr_wk,
+        cast(weekday as string) as weekday,
+        cast(wday as int64) as wday,
+        cast(month as int64) as month,
+        cast(year as int64) as year,
+        cast(d as string) as day_id,
+        cast(event_name_1 as string)  as event_name_1,
+        cast(event_type_1 as string)  as event_type_1,
+        cast(event_name_2 as string)  as event_name_2,
+        cast(event_type_2 as string)  as event_type_2,
+        cast(snap_CA as int64) as snap_ca,
+        cast(snap_TX as int64) as snap_tx,
+        cast(snap_WI as int64) as snap_wi
+    from source
+)
+
+select * from renamed

@@ -26,6 +26,8 @@ sources:
             data_type: INT64
           - name: year
             data_type: INT64
+          - name: d
+            data_type: STRING
           - name: event_name_1
             data_type: STRING
           - name: event_type_1
@@ -73,12 +75,12 @@ sources:
           options:
             format: json
         columns:
-          - name: time
-            data_type: JSON
-          - name: temperature_2m_max
-            data_type: JSON
-          - name: precipitation_sum
-            data_type: JSON
+            - name: _airbyte_ab_id
+              data_type: STRING
+            - name: _airbyte_emitted_at
+              data_type: INT64
+            - name: _airbyte_data
+              data_type: JSON
 
       - name: weather_texas_ext
         description: "Daily weather data for Texas (2011-2016)"
@@ -87,12 +89,12 @@ sources:
           options:
             format: json
         columns:
-          - name: time
-            data_type: JSON
-          - name: temperature_2m_max
-            data_type: JSON
-          - name: precipitation_sum
-            data_type: JSON
+            - name: _airbyte_ab_id
+              data_type: STRING
+            - name: _airbyte_emitted_at
+              data_type: INT64
+            - name: _airbyte_data
+              data_type: JSON
 
       - name: weather_wisconsin_ext
         description: "Daily weather data for Wisconsin (2011-2016)"
@@ -101,9 +103,9 @@ sources:
           options:
             format: json
         columns:
-          - name: time
-            data_type: JSON
-          - name: temperature_2m_max
-            data_type: JSON
-          - name: precipitation_sum
-            data_type: JSON
+            - name: _airbyte_ab_id
+              data_type: STRING
+            - name: _airbyte_emitted_at
+              data_type: INT64
+            - name: _airbyte_data
+              data_type: JSON
