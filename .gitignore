@@ -1,0 +1,41 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Credentials & secrets
+*.json
+!ingestion/airbyte/credentials.example.json
+hmac_keys.txt
+*.key
+*.pem
+*.p12
+.env
+.env.*
+
+# Terraform state & sensitive files
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/*.tfvars
+
+# Data files
+ingestion/scripts/data/
+*.csv
+*.zip
+*.parquet
+
+# Notes personnelles / docs de travail
+steps/
+
+# macOS
+.DS_Store
+**/.DS_Store
