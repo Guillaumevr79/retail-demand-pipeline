@@ -157,13 +157,6 @@ retail-demand-pipeline/
 │       ├── transformation_dbt.py # dbt silver → gold → test
 │       └── forecasting_ml.py     # BigQuery ML train + predict
 │
-├── steps/                        # Documentation how-to détaillée
-│   ├── 01-terraform_how_to.txt
-│   ├── 02-ingestion.txt
-│   ├── 03-dbt.txt
-│   ├── 04-bigquery_ml.txt
-│   └── 05-airflow.txt
-│
 ├── docker-compose.yml            # Airflow (webserver, scheduler, dag-processor, postgres)
 ├── start.sh                      # Démarrage complet (Docker + Airbyte + port-forward)
 └── stop.sh                       # Arrêt propre
@@ -196,8 +189,6 @@ terraform apply
 
 Crée : bucket GCS `retail-demand-pl-bronze`, dataset BigQuery `retail_demand_pl_dataset`, service account `retail-sa` avec les rôles IAM nécessaires.
 
-Voir [steps/01-terraform_how_to.txt](steps/01-terraform_how_to.txt) pour le détail.
-
 ---
 
 ### Étape 2 — Ingestion des données
@@ -218,8 +209,6 @@ pip install kaggle google-cloud-storage
 python ingestion/scripts/download-m5.py
 ```
 
-Voir [steps/02-ingestion.txt](steps/02-ingestion.txt) pour le détail (connecteur Airbyte, HMAC keys, ingestion M5).
-
 ---
 
 ### Étape 3 — Transformations dbt
@@ -232,8 +221,6 @@ dbt run-operation stage_external_sources  # crée les external tables dans BigQu
 dbt run                                   # silver (views) + gold (tables)
 dbt test                                  # tests qualité données
 ```
-
-Voir [steps/03-dbt.txt](steps/03-dbt.txt) pour le détail (profiles.yml, matérialisations, structure des modèles).
 
 ---
 
@@ -248,8 +235,6 @@ Lancer les deux requêtes depuis la console BigQuery ou via le DAG Airflow :
 -- 2. Génération des prédictions sur 28 jours
 -- bigquery_ml/predictions/generate_predictions.sql
 ```
-
-Voir [steps/04-bigquery_ml.txt](steps/04-bigquery_ml.txt) pour le détail (options ARIMA_PLUS, vérification du modèle, requêtes de consultation).
 
 ---
 
@@ -277,8 +262,6 @@ Lancer les DAGs dans l'ordre :
 | `ingestion` | Sync météo Airbyte + téléchargement M5 |
 | `transformation_dbt` | dbt silver → gold → tests |
 | `forecasting_ml` | Entraînement ARIMA_PLUS + prédictions |
-
-Voir [steps/05-airflow.txt](steps/05-airflow.txt) pour le détail (Dockerfile, volumes, connexions, pattern general).
 
 ---
 
