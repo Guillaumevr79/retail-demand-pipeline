@@ -25,6 +25,19 @@ The project aims to model demand at the item × store level, train an ARIMA_PLUS
 
 ---
 
+## Aperçu / Overview
+
+![Dashboard Looker Studio — vue globale avec KPIs et ventes journalières par état (CA, TX, WI)](screenshots/looker.png)
+*Dashboard Looker Studio — vue globale : KPIs et ventes journalières par état (CA, TX, WI)*
+
+![DAG Airflow "pipeline" — enchaînement ingestion → transformation → forecasting en succès](screenshots/airflow.png)
+*DAG Airflow "pipeline" — ingestion → transformation → forecasting*
+
+![Dataset BigQuery retail_demand_pl_dataset — external tables, modèles Silver/Gold et modèle ARIMA_PLUS](screenshots/bigquery.png)
+*Dataset BigQuery retail_demand_pl_dataset — external tables, modèles dbt Silver/Gold et modèle ML ARIMA_PLUS*
+
+---
+
 ## Architecture
 
 ```text
