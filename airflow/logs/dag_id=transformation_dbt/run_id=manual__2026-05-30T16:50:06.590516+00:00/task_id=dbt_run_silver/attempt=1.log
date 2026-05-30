@@ -1,0 +1,29 @@
+{"timestamp":"2026-05-30T16:50:07.605829Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":209}
+{"timestamp":"2026-05-30T16:50:07.606828Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/transformation_dbt.py","logger":"airflow.dag_processing.dagbag.BundleDagBag","filename":"dagbag.py","lineno":469}
+{"timestamp":"2026-05-30T16:50:07.636993Z","level":"warning","event":"The `airflow.decorators.dag` attribute is deprecated. Please use `'airflow.sdk.dag'`.","category":"UserWarning","filename":"/opt/airflow/dags/transformation_dbt.py","lineno":2,"logger":"py.warnings"}
+{"timestamp":"2026-05-30T16:50:07.637056Z","level":"warning","event":"The `airflow.decorators.task` attribute is deprecated. Please use `'airflow.sdk.task'`.","category":"UserWarning","filename":"/opt/airflow/dags/transformation_dbt.py","lineno":2,"logger":"py.warnings"}
+{"timestamp":"2026-05-30T16:50:11.208104Z","level":"info","event":"\u001b[0m16:50:08  Running with dbt=1.11.11","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208389Z","level":"info","event":"\u001b[0m16:50:08  Registered adapter: bigquery=1.11.1","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208490Z","level":"info","event":"\u001b[0m16:50:09  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208561Z","level":"info","event":"There are 1 unused configuration paths:","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208671Z","level":"info","event":"- models.retail_demand_pl.example","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208743Z","level":"info","event":"\u001b[0m16:50:09  Found 6 models, 6 sources, 600 macros","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208795Z","level":"info","event":"\u001b[0m16:50:09","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208842Z","level":"info","event":"\u001b[0m16:50:09  Concurrency: 4 threads (target='dev')","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208886Z","level":"info","event":"\u001b[0m16:50:09","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208930Z","level":"info","event":"\u001b[0m16:50:09  1 of 4 START sql view model retail_demand_pl_dataset.stg_m5_calendar ........... [RUN]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208975Z","level":"info","event":"\u001b[0m16:50:09  3 of 4 START sql view model retail_demand_pl_dataset.stg_m5_sell_prices ........ [RUN]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209028Z","level":"info","event":"\u001b[0m16:50:09  4 of 4 START sql view model retail_demand_pl_dataset.stg_weather ............... [RUN]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209077Z","level":"info","event":"\u001b[0m16:50:09  2 of 4 START sql view model retail_demand_pl_dataset.stg_m5_sales .............. [RUN]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209119Z","level":"info","event":"\u001b[0m16:50:10  1 of 4 OK created sql view model retail_demand_pl_dataset.stg_m5_calendar ...... [\u001b[32mCREATE VIEW (0 processed)\u001b[0m in 0.99s]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209167Z","level":"info","event":"\u001b[0m16:50:10  2 of 4 OK created sql view model retail_demand_pl_dataset.stg_m5_sales ......... [\u001b[32mCREATE VIEW (0 processed)\u001b[0m in 1.00s]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209212Z","level":"info","event":"\u001b[0m16:50:10  3 of 4 OK created sql view model retail_demand_pl_dataset.stg_m5_sell_prices ... [\u001b[32mCREATE VIEW (0 processed)\u001b[0m in 1.00s]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209259Z","level":"info","event":"\u001b[0m16:50:10  4 of 4 OK created sql view model retail_demand_pl_dataset.stg_weather .......... [\u001b[32mCREATE VIEW (0 processed)\u001b[0m in 1.00s]","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209309Z","level":"info","event":"\u001b[0m16:50:10","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209424Z","level":"info","event":"\u001b[0m16:50:10  Finished running 4 view models in 0 hours 0 minutes and 1.77 seconds (1.77s).","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209497Z","level":"info","event":"\u001b[0m16:50:10","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209558Z","level":"info","event":"\u001b[0m16:50:10  \u001b[32mCompleted successfully\u001b[0m","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209604Z","level":"info","event":"\u001b[0m16:50:10","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209646Z","level":"info","event":"\u001b[0m16:50:10  Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.209706Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:50:11.208036Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":229}

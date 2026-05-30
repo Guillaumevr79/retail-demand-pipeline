@@ -1,0 +1,18 @@
+{"timestamp":"2026-05-30T16:34:33.840182Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":209}
+{"timestamp":"2026-05-30T16:34:33.842317Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/ingestion.py","logger":"airflow.dag_processing.dagbag.BundleDagBag","filename":"dagbag.py","lineno":469}
+{"timestamp":"2026-05-30T16:34:34.783975Z","level":"warning","event":"The `airflow.decorators.dag` attribute is deprecated. Please use `'airflow.sdk.dag'`.","category":"UserWarning","filename":"/opt/airflow/dags/ingestion.py","lineno":2,"logger":"py.warnings"}
+{"timestamp":"2026-05-30T16:34:34.784091Z","level":"warning","event":"The `airflow.decorators.task` attribute is deprecated. Please use `'airflow.sdk.task'`.","category":"UserWarning","filename":"/opt/airflow/dags/ingestion.py","lineno":2,"logger":"py.warnings"}
+{"timestamp":"2026-05-30T16:35:01.471358Z","level":"info","event":"Téléchargement du dataset M5...","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.472433Z","level":"info","event":"Downloading m5-forecasting-accuracy.zip to ./data/raw","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.472639Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.472790Z","level":"info","event":"Extraction...","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.472904Z","level":"info","event":"Extraction terminée.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473051Z","level":"info","event":"Upload sales_train_validation.csv → gs://retail-demand-pl-bronze/m5/bronze/sales_train_validation.csv","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473184Z","level":"info","event":"✓ sales_train_validation.csv uploadé.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473291Z","level":"info","event":"Upload calendar.csv → gs://retail-demand-pl-bronze/m5/bronze/calendar.csv","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473377Z","level":"info","event":"✓ calendar.csv uploadé.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473474Z","level":"info","event":"Upload sell_prices.csv → gs://retail-demand-pl-bronze/m5/bronze/sell_prices.csv","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473579Z","level":"info","event":"✓ sell_prices.csv uploadé.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473671Z","level":"info","event":"Ingestion M5 terminée.","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.473790Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-05-30T16:35:01.471562Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":229}

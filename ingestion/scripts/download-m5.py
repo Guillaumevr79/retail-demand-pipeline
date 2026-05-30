@@ -21,11 +21,15 @@ def download_m5():
         path=RAW_DIR,
         quiet=False
     )
-    zip_path = os.path.join(RAW_DIR, "m5-forecasting-accuracy.zip")
+    zip_files = [f for f in os.listdir(RAW_DIR) if f.endswith(".zip")]
+    if not zip_files:
+        raise FileNotFoundError(f"No zip file found in {RAW_DIR} after download")
     print("Extraction...")
-    with zipfile.ZipFile(zip_path, "r") as z:
-        z.extractall(RAW_DIR)
-    os.remove(zip_path)
+    for zip_name in zip_files:
+        zip_path = os.path.join(RAW_DIR, zip_name)
+        with zipfile.ZipFile(zip_path, "r") as z:
+            z.extractall(RAW_DIR)
+        os.remove(zip_path)
     print("Extraction terminée.")
 
 def upload_to_gcs():

@@ -1,0 +1,131 @@
+services:
+  postgres:
+    image: postgres:15
+    networks:
+      - retail_network
+    environment:
+      - POSTGRES_USER=${AIRFLOW_POSTGRES_USER:-airflow}
+      - POSTGRES_PASSWORD=${AIRFLOW_POSTGRES_PASSWORD:-airflow}
+      - POSTGRES_DB=${AIRFLOW_POSTGRES_DB:-airflow}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  init-airflow:
+    image: apache/airflow:3.2.1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - retail_network
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_POSTGRES_USER:-airflow}:${AIRFLOW_POSTGRES_PASSWORD:-airflow}@postgres/${AIRFLOW_POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__AUTH_MANAGER=airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    command: >
+      bash -c "pip install apache-airflow-providers-fab==3.6.1 &&
+              airflow db migrate &&
+              airflow users create --username ${AIRFLOW_ADMIN_USER:-airflow} --password ${AIRFLOW_ADMIN_PASSWORD:-password} --firstname airflow --lastname airflow --role Admin --email ${AIRFLOW_ADMIN_EMAIL:-admin@airflow.com}"
+
+  webserver:
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - retail_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./dbt/retail_demand_pl:/opt/dbt
+      - ~/.dbt:/home/airflow/.dbt
+      - ~/.gcp:/home/airflow/.gcp
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./bigquery_ml:/opt/airflow/bigquery_ml
+      - ./ingestion:/opt/airflow/ingestion
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_POSTGRES_USER:-airflow}:${AIRFLOW_POSTGRES_PASSWORD:-airflow}@postgres/${AIRFLOW_POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY}
+      - AIRFLOW__CORE__AUTH_MANAGER=airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+      - AIRFLOW__API__SECRET_KEY=${AIRFLOW_API_SECRET_KEY}
+      - AIRFLOW__API_AUTH__JWT_SECRET=${AIRFLOW_JWT_SECRET}
+      - AIRFLOW__WEBSERVER__BASE_URL=http://localhost:8080
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/airflow/.gcp/retail-sa-key.json
+      - AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT=google-cloud-platform://?key_path=%2Fhome%2Fairflow%2F.gcp%2Fretail-sa-key.json&project=retail-demand-pipeline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform
+      - KAGGLE_USERNAME=guillaumetm
+      - KAGGLE_KEY=030a447df7c2976549689e293839f3fe
+    ports:
+      - "8080:8080"
+    command: api-server
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - retail_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./dbt/retail_demand_pl:/opt/dbt
+      - ~/.dbt:/home/airflow/.dbt
+      - ~/.gcp:/home/airflow/.gcp
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./bigquery_ml:/opt/airflow/bigquery_ml
+      - ./ingestion:/opt/airflow/ingestion
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_POSTGRES_USER:-airflow}:${AIRFLOW_POSTGRES_PASSWORD:-airflow}@postgres/${AIRFLOW_POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY}
+      - AIRFLOW__CORE__AUTH_MANAGER=airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+      - AIRFLOW__API__SECRET_KEY=${AIRFLOW_API_SECRET_KEY}
+      - AIRFLOW__API_AUTH__JWT_SECRET=${AIRFLOW_JWT_SECRET}
+      - AIRFLOW__WEBSERVER__BASE_URL=http://webserver:8080
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/airflow/.gcp/retail-sa-key.json
+      - AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT=google-cloud-platform://?key_path=%2Fhome%2Fairflow%2F.gcp%2Fretail-sa-key.json&project=retail-demand-pipeline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform
+      - KAGGLE_USERNAME=guillaumetm
+      - KAGGLE_KEY=030a447df7c2976549689e293839f3fe
+    command: scheduler
+
+  dag-processor:
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    user: root
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - retail_network
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./dbt/retail_demand_pl:/opt/dbt
+      - ~/.dbt:/home/airflow/.dbt
+      - ~/.gcp:/home/airflow/.gcp
+      - ./bigquery_ml:/opt/airflow/bigquery_ml
+      - ./ingestion:/opt/airflow/ingestion
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${AIRFLOW_POSTGRES_USER:-airflow}:${AIRFLOW_POSTGRES_PASSWORD:-airflow}@postgres/${AIRFLOW_POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY}
+      - AIRFLOW__CORE__AUTH_MANAGER=airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/airflow/.gcp/retail-sa-key.json
+      - AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT=google-cloud-platform://?key_path=%2Fhome%2Fairflow%2F.gcp%2Fretail-sa-key.json&project=retail-demand-pipeline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform
+    command: dag-processor
+
+networks:
+  retail_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
