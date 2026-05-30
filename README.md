@@ -13,15 +13,15 @@
 
 ### Français
 
-Pipeline ELT end-to-end pour la prédiction de demande retail, basé sur le dataset M5 Forecasting (Walmart, 42 000 séries temporelles journalières, 2011–2016) enrichi de données météo historiques pour trois états américains (Californie, Texas, Wisconsin).
+Pipeline ELT end-to-end de prévision de la demande retail basé sur le dataset M5 Forecasting (Walmart, 42 000 séries temporelles journalières, période 2011–2016) enrichi par des données météorologiques historiques couvrant trois États américains (Californie, Texas et Wisconsin).
 
-L'objectif est de modéliser la demande à l'article et au magasin, d'entraîner un modèle de prévision ARIMA_PLUS via BigQuery ML et d'exposer les prédictions sur 28 jours dans un dashboard Looker Studio.
+L'objectif est de modéliser la demande au niveau article × magasin, d'entraîner un modèle de prévision ARIMA_PLUS avec BigQuery ML et d'exposer des prévisions à horizon 28 jours au travers d'un tableau de bord Looker Studio.
 
 ### English
 
-End-to-end ELT pipeline for retail demand forecasting, built on the M5 Forecasting dataset (Walmart, 42,000 daily time series, 2011–2016) enriched with historical weather data for three US states (California, Texas, Wisconsin).
+End-to-end ELT pipeline for retail demand forecasting built on the M5 Forecasting dataset (Walmart, 42,000 daily time series, 2011–2016) enriched with historical weather data from three US states (California, Texas, and Wisconsin).
 
-The goal is to model demand at the item × store level, train an ARIMA_PLUS forecast model via BigQuery ML, and expose 28-day predictions in a Looker Studio dashboard.
+The project aims to model demand at the item × store level, train an ARIMA_PLUS forecasting model using BigQuery ML, and expose 28-day forecasts through a Looker Studio dashboard.
 
 ---
 
